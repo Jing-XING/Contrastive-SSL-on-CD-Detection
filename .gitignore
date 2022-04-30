@@ -1,6 +1,11 @@
+#data
+*.png
+*.jpg
+*.csv
+
 # check point
-/baseline/ckpt/*
-/reference_code/BYOL-PyTorch-yaox12-/ckpt/*
+*.pth
+
 # log
 /baseline/log/*
 /reference_code/BYOL-PyTorch-yaox12-/runs/*
