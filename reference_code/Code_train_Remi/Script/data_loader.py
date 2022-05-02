@@ -7,7 +7,7 @@ import random
 from torch.utils.data.dataset import Dataset
 import cv2
 import pandas as pd
-from reference_code.Code_train_Remi.Script.utils import *
+from utils import *
 
 
 def get_train_valid_loader_consensus(csv, batch_size=16,

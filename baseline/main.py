@@ -24,6 +24,7 @@ ckpt_path= os.path.join('ckpt','fold'+str(foldnum)+'.pth')
 # test_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/fold1/"
 # train_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/notfold1/"
 
+
 test_dir = "/opt/data/home-jing/SSL_for_CD/dataset/val/fold1"
 train_dir = "/opt/data/home-jing/SSL_for_CD/dataset/val/notfold1"
 batch_size = 16

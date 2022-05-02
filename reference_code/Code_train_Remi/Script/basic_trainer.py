@@ -24,9 +24,10 @@ from models.ResNet34.model import Model
 
 class Trainer(object):
 
-    def __init__(self, config, trainloader, validloader, testloader, iteration_value):
+    def __init__(self, config, trainloader, validloader, testloader, iteration_value, writer):
         self.config = config
         self.random_seed = iteration_value
+        self.writer = writer
         # data params
         self.train_loader = trainloader
         self.valid_loader = validloader

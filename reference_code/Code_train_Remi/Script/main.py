@@ -1,7 +1,10 @@
-from reference_code.Code_train_Remi.Script.basic_trainer import Trainer
+from basic_trainer import Trainer
 from config import get_config
 from data_loader import *
 from utils import *
+from torch.utils.tensorboard import SummaryWriter
+import time
+import os
 def main(config):
     cross_acc = 0
 
@@ -32,10 +35,13 @@ def main(config):
                                                         subset='test',
                                                         num_workers=0,
                                                         mode=config.shuffle_mode, test_size=config.test_size, valid_size=config.valid_size)
-
+        now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
         for i in range(len(trainloaders)):
+            log_path = f'./log/{now}/subset{i}'
+            os.makedirs(log_path)
+            writer = SummaryWriter(log_path)
             trainer = Trainer(config, trainloaders[i], validloaders[i],
-                                testloaders[i], iteration_value=5 * Cval_num + i)
+                                testloaders[i], iteration_value=5 * Cval_num + i, writer)
             trainer.train()
             torch.cuda.empty_cache()
 
