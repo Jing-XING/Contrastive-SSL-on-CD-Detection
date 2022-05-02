@@ -26,7 +26,7 @@ ckpt_path= os.path.join('ckpt','fold'+str(foldnum)+'.pth')
 
 test_dir = "/opt/data/home-jing/SSL_for_CD/dataset/val/fold1"
 train_dir = "/opt/data/home-jing/SSL_for_CD/dataset/val/notfold1"
-batch_size = 64
+batch_size = 16
 log_path = './log'
 lr = 0.001
 now = time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time()))
@@ -75,7 +75,7 @@ def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
             train_acc_sum += (y_hat.argmax(dim=1) == y).sum().item()
             n += y.shape[0]
             batch_count += 1
-        if epoch % 5 == 0:
+        if epoch % 2 == 0:
             with torch.no_grad():
                 net.eval()
                 test_acc_sum, test_loss_sum, n2, batch_count2 = 0.0, 0.0, 0, 0

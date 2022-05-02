@@ -27,7 +27,7 @@ def run_task(config):
 
     for epoch in range(start_epoch + 1, trainer.total_epochs + 1):
         trainer.train_epoch(epoch, printer=logging.info)
-        trainer.save_checkpoint(epoch)
+        #trainer.save_checkpoint(epoch)
 
 def main():
     with open(Path(Path(__file__).parent, 'config/train_config.yaml'), 'r') as f:

@@ -9,6 +9,7 @@
 *.pth.tar
 
 # log
+events.*
 /baseline/log/*
 /reference_code/BYOL-PyTorch-yaox12-/runs/*
 # dataset
