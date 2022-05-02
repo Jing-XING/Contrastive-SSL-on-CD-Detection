@@ -2,19 +2,23 @@
 *.png
 *.jpg
 *.csv
+*.meta
+/dataset
 
 # check point
 *.pth
+*.pth.tar
+*.tar
 
 # log
 /baseline/log/*
 /reference_code/BYOL-PyTorch-yaox12-/runs/*
-# dataset
-/dataset
+events.*
+
+
 # pycharm
 /.idea
-# saved model
-/saved_model
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
