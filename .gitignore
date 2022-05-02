@@ -5,6 +5,8 @@
 
 # check point
 *.pth
+*.tar
+*.pth.tar
 
 # log
 /baseline/log/*
