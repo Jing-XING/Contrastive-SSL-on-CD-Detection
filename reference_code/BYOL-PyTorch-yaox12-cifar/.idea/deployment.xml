@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="197_Fc4_optimized_version" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="197_Fc4_optimized_version">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/shareData3/lab-xing.jing/project/nantes/BYOL-PyTorch-yaox12" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="lab-xing.jing@222.201.134.213:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="lab-xing.jing@222.201.134.213:22 (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

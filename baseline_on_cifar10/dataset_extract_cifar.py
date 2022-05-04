@@ -14,8 +14,8 @@ class CIFAR10_IMG(Dataset):
         train_list=[
             'data_batch_1',
             # ONLY use 10k for train
-            # 'data_batch_2',
-            # 'data_batch_3',
+            'data_batch_2',
+            'data_batch_3',
             # 'data_batch_4',
             # 'data_batch_5',
         ]
@@ -38,26 +38,32 @@ class CIFAR10_IMG(Dataset):
                     self.targets.extend(entry['labels'])
                 else:
                     self.targets.extend(entry['fine_labels'])
-        # get 5k images for train and test respectively
-        temp_target = []
-        temp_data = np.uint8(np.zeros((5000,3072)))
-        count_list=[0,0,0,0,0,0,0,0,0,0]
-        j=0
-        for i in range(len(self.targets)):
-            if not count_list[self.targets[i]]>=500:
-                count_list[self.targets[i]]+=1
-                temp_data[j]=self.data[0][i]
-                j+=1
-                temp_target.append(self.targets[i])
-            else:
-                continue
-        self.targets=temp_target
-        self.data[0] = temp_data
+        # # get 5k images for train and test respectively
+        # temp_target = []
+        # temp_data = np.uint8(np.zeros((5000,3072)))
+        # count_list=[0,0,0,0,0,0,0,0,0,0]
+        # j=0
+        # for i in range(len(self.targets)):
+        #     if not count_list[self.targets[i]]>=500:
+        #         count_list[self.targets[i]]+=1
+        #         temp_data[j]=self.data[0][i]
+        #         j+=1
+        #         temp_target.append(self.targets[i])
+        #     else:
+        #         continue
+        # self.targets=temp_target
+        # self.data[0] = temp_data
 
 
         self.data = np.vstack(self.data).reshape(-1, 3, 32, 32)
         self.data = self.data.transpose((0, 2, 3, 1))
-
+        n=0
+        for i in range(len(self.data)):
+            img, target = self.data[i], self.targets[i]
+            img = Image.fromarray(img)
+            img.save(f'extract_imgs/batch1_3/{str(target)}/{i}.jpg')
+            n+=1
+        print(n)
 
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]

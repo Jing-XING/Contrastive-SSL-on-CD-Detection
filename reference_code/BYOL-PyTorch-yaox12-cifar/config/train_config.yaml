@@ -19,20 +19,20 @@ amp:
   opt_level: "O0"
 
 data:
-  image_dir: "../../dataset/DataCrohnIPI/"
-  resize_size: 256
+  image_dir: "../../dataset/cifar/extract_imgs_batch1_3"
+  resize_size: 32
   data_workers: 4
-  train_batch_size: 128
+  train_batch_size: 512
   val_batch_size: 64
   dual_views: true
-  num_examples: 35053
+  num_examples: 30000
 
 optimizer:
   type: lars
   base_lr: 0.3
   momentum: 0.9
   weight_decay: 1.0e-6
-  total_epochs: 300
+  total_epochs: 200
   warmup_epochs: 10
   exclude_bias_and_bn: true
 
@@ -40,8 +40,8 @@ optimizer:
 checkpoint:
   time_stamp: 0423
   resume_path:
-  save_epoch: 10
-  ckpt_path: "ckpt/byol_crohnIPI/{}/{}_{}.pth.tar"
+  save_epoch: 5
+  ckpt_path: "ckpt/byol_cifar/{}_{}.pth.tar"
 
 log:
   log_step: 10
