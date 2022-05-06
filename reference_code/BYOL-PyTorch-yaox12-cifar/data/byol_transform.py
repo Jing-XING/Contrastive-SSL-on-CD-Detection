@@ -39,7 +39,7 @@ def get_transform(stage, gb_prob=1.0, solarize_prob=0.):
 
     if stage in ('train', 'val'):
         t_list = [
-            transforms.RandomResizedCrop(32),
+            transforms.RandomResizedCrop(256),
             transforms.RandomHorizontalFlip(),
             transforms.RandomApply([color_jitter], p=0.8),
             transforms.RandomGrayscale(p=0.2),
@@ -50,14 +50,14 @@ def get_transform(stage, gb_prob=1.0, solarize_prob=0.):
         ]
     elif stage == 'ft':
         t_list = [
-            transforms.RandomResizedCrop(32),
+            transforms.RandomResizedCrop(256),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             #normalize
         ]
     elif stage == 'test':
         t_list = [
-            transforms.Resize(32),
+            transforms.Resize(256),
             transforms.ToTensor(),
             #normalize
         ]

@@ -15,14 +15,14 @@ model:
     output_dim: 256
 
 amp:
-  sync_bn: False
-  opt_level: "O0"
+  sync_bn: True
+  opt_level: "O1"
 
 data:
   image_dir: "../../dataset/cifar/extract_imgs_batch1_3"
   resize_size: 32
   data_workers: 4
-  train_batch_size: 512
+  train_batch_size: 4096
   val_batch_size: 64
   dual_views: true
   num_examples: 30000
@@ -44,9 +44,9 @@ checkpoint:
   ckpt_path: "ckpt/byol_cifar/{}_{}.pth.tar"
 
 log:
-  log_step: 10
+  log_step: 2
   log_dir:
 
 stage: "train"
 distributed: False
-acc_n: 2
+acc_n: 1

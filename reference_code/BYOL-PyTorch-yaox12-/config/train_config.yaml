@@ -19,7 +19,7 @@ amp:
   opt_level: "O0"
 
 data:
-  image_dir: "../../dataset/DataCrohnIPI/"
+  image_dir: "../../dataset/"
   resize_size: 256
   data_workers: 4
   train_batch_size: 128
@@ -49,4 +49,4 @@ log:
 
 stage: "train"
 distributed: False
-acc_n: 2
+acc_n: 1

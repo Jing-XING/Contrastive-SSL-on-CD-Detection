@@ -10,6 +10,20 @@ import time
 import os
 from torch.utils.tensorboard import SummaryWriter
 
+def load_dic(net,pretrained_model_path):
+    if torch.cuda.is_available():
+        pretrained_dict = torch.load(pretrained_model_path)
+    else:
+        pretrained_dict = torch.load(pretrained_model_path, map_location=torch.device('cpu'))
+    keys_pretrained = list(pretrained_dict['model'].keys())
+    baseline_dict=net.state_dict()
+    i = 0
+    for k, v in baseline_dict.items():
+        if v.size() == pretrained_dict['model'][keys_pretrained[i]].size():
+            baseline_dict[k] = pretrained_dict['model'][keys_pretrained[i]]
+        i = i + 1
+    net.load_state_dict(baseline_dict)
+    return net
 
 def Model(nb_classes, pretrained=False):
     # Pretrained Resnet 34
@@ -68,7 +82,7 @@ def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
                  test_acc_sum / n2,
                  best_accuracy, time.time() - start))
 
-
+pretrained_path='../reference_code/BYOL-PyTorch-yaox12-cifar/ckpt/byol_cifar/resnet34_10.pth.tar'
 mode = 'train'
 foldnum = 1
 cifar10_path ='../dataset/cifar/'
@@ -113,11 +127,11 @@ train_augs = transforms.Compose([
     transforms.RandomHorizontalFlip(),
     transforms.RandomVerticalFlip(),
     transforms.RandomRotation((180, 180)),
-    transforms.Resize(256),
+    # transforms.Resize(256),
     transforms.ToTensor()
 ])
 test_augs = transforms.Compose([
-    transforms.Resize(256),
+    # transforms.Resize(256),
     transforms.ToTensor()
 ])
 
@@ -132,6 +146,10 @@ train_iter = DataLoader(train_set, batch_size=batch_size, shuffle=True)
 test_iter = DataLoader(test_set, batch_size=batch_size, shuffle=True)
 
 pretrained_net = Model(nb_classes=num_classes, pretrained=True)
+# if not pretrained_path=='':
+#     print('loading pretrained model:',pretrained_path)
+#     load_dic(pretrained_net,pretrained_path)
+#     print('finish load')
 output_params = list(map(id, pretrained_net.fc.parameters()))
 feature_params = filter(lambda p: id(p) not in output_params, pretrained_net.parameters())
 # optimizer = optim.SGD([{'params': feature_params},

@@ -1,5 +1,5 @@
 import torch
-import dataset
+import dataset_extract_cifar as dataset
 
 from torch import nn, optim
 from torch.utils.data import DataLoader
@@ -42,26 +42,7 @@ def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
             train_acc_sum += (y_hat.argmax(dim=1) == y).sum().item()
             n += y.shape[0]
             batch_count += 1
-        if epoch % 1 == 0:
-            with torch.no_grad():
-                net.eval()
-                test_acc_sum, test_loss_sum, n2, batch_count2 = 0.0, 0.0, 0, 0
-                for X, y in test_iter:
-                    X, y = X.to(device), y.to(device)
-                    y_hat = net(X)
-                    loss = criterion(y_hat, y)
-                    test_loss_sum += loss.item()
-                    test_acc_sum += (y_hat.argmax(dim=1) == y).sum().item()
-                    # test_acc_sum += (net(X.to(device)).argmax(dim=1) == y.to(device)).float().sum().cpu().item()
-                    n2 += y.shape[0]
-                    batch_count2 += 1
-            if best_accuracy < (test_acc_sum / n2):
-                torch.save(net.state_dict(), ckpt_path)
-                best_accuracy = test_acc_sum / n2
-            val_writer.add_scalar('loss', test_loss_sum / batch_count2, epoch)
-            val_writer.add_scalar('accuracy', test_acc_sum / n2, epoch)
-        train_writer.add_scalar('loss', train_loss_sum / batch_count, epoch)
-        train_writer.add_scalar('accuracy', train_acc_sum / n, epoch)
+        
 
         print('epoch %d, train loss %.4f, train acc %.3f, test loss %.4f, test acc %.3f, best acc %.3f, time %.1f sec'
               % (epoch + 1, train_loss_sum / batch_count, train_acc_sum / n, test_loss_sum / batch_count2,
@@ -122,23 +103,23 @@ test_augs = transforms.Compose([
 ])
 
 train_set = dataset.CIFAR10_IMG(cifar10_path,train=True,transform=train_augs)
-test_set = dataset.CIFAR10_IMG(cifar10_path,train=False,transform=test_augs)
+# test_set = dataset.CIFAR10_IMG(cifar10_path,train=False,transform=test_augs)
 
 # train_set = datasets.ImageFolder(train_dir, transform=train_augs)
 # test_set = datasets.ImageFolder(test_dir, transform=test_augs)
 print('len train set/test_set', len(train_set), len(test_set))
 
-train_iter = DataLoader(train_set, batch_size=batch_size, shuffle=True)
-test_iter = DataLoader(test_set, batch_size=batch_size, shuffle=True)
+# train_iter = DataLoader(train_set, batch_size=batch_size, shuffle=True)
+# test_iter = DataLoader(test_set, batch_size=batch_size, shuffle=True)
 
-pretrained_net = Model(nb_classes=num_classes, pretrained=True)
-output_params = list(map(id, pretrained_net.fc.parameters()))
-feature_params = filter(lambda p: id(p) not in output_params, pretrained_net.parameters())
-# optimizer = optim.SGD([{'params': feature_params},
-#                        {'params': pretrained_net.fc.parameters(), 'lr': lr * 10}],
-#                       lr=lr, momentum=0.9)
-optimizer = optim.Adam(pretrained_net.parameters(), lr=lr)
+# pretrained_net = Model(nb_classes=num_classes, pretrained=True)
+# output_params = list(map(id, pretrained_net.fc.parameters()))
+# feature_params = filter(lambda p: id(p) not in output_params, pretrained_net.parameters())
+# # optimizer = optim.SGD([{'params': feature_params},
+# #                        {'params': pretrained_net.fc.parameters(), 'lr': lr * 10}],
+# #                       lr=lr, momentum=0.9)
+# optimizer = optim.Adam(pretrained_net.parameters(), lr=lr)
 
-loss = torch.nn.CrossEntropyLoss()
+# loss = torch.nn.CrossEntropyLoss()
 
-train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs)
+# train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs)

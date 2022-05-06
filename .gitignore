@@ -7,7 +7,7 @@
 *.pth
 *.tar
 *.pth.tar
-
+*.tar.gz
 # log
 events.*
 /baseline/log/*

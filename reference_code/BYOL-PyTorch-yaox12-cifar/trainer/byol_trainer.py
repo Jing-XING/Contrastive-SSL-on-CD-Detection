@@ -64,7 +64,7 @@ class BYOLTrainer():
         """save checkpoint path"""
         self.save_epoch = self.config['checkpoint']['save_epoch']
         self.ckpt_path = self.config['checkpoint']['ckpt_path'].format(
-            self.time_stamp, self.config['model']['backbone']['type'], {})
+             self.config['model']['backbone']['type'], {})
         if not os.path.exists(self.ckpt_path):
             os.makedirs(self.ckpt_path)
 
