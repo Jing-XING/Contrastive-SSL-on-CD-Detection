@@ -40,11 +40,11 @@ class CIFAR10_IMG(Dataset):
                     self.targets.extend(entry['fine_labels'])
         # get 5k images for train and test respectively
         temp_target = []
-        temp_data = np.uint8(np.zeros((5000,3072)))
+        temp_data = np.uint8(np.zeros((1000,3072)))
         count_list=[0,0,0,0,0,0,0,0,0,0]
         j=0
         for i in range(len(self.targets)):
-            if not count_list[self.targets[i]]>=500:
+            if not count_list[self.targets[i]]>=100:
                 count_list[self.targets[i]]+=1
                 temp_data[j]=self.data[0][i]
                 j+=1

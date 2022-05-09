@@ -16,23 +16,23 @@ model:
 
 amp:
   sync_bn: True
-  opt_level: "O1"
+  opt_level: "O0"
 
 data:
   image_dir: "../../dataset/cifar/extract_imgs_batch1_3"
-  resize_size: 32
+  resize_size: 256
   data_workers: 4
-  train_batch_size: 4096
+  train_batch_size: 128
   val_batch_size: 64
   dual_views: true
   num_examples: 30000
 
 optimizer:
   type: lars
-  base_lr: 0.3
+  base_lr: 0.03
   momentum: 0.9
   weight_decay: 1.0e-6
-  total_epochs: 200
+  total_epochs: 300
   warmup_epochs: 10
   exclude_bias_and_bn: true
 
@@ -40,7 +40,7 @@ optimizer:
 checkpoint:
   time_stamp: 0423
   resume_path:
-  save_epoch: 5
+  save_epoch: 20
   ckpt_path: "ckpt/byol_cifar/{}_{}.pth.tar"
 
 log:
@@ -49,4 +49,4 @@ log:
 
 stage: "train"
 distributed: False
-acc_n: 1
+acc_n: 2

@@ -130,8 +130,6 @@ class BYOLTrainer():
 
     # save snapshots
     def save_checkpoint(self, epoch):
-        if epoch >50:
-            self.save_epoch=20
         if epoch % self.save_epoch == 0 and self.rank == 0:
             state = {'config': self.config,
                      'epoch': epoch,

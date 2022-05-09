@@ -21,7 +21,7 @@ def Model(nb_classes, pretrained=False):
     return model
 
 
-def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
+def train(net, train_iter, test_iter, criterion, optimizer, num_epochs,train_writer, val_writer):
     net = net.to(device)
     print("training on", device)
     best_accuracy = 0.0
@@ -75,7 +75,7 @@ cifar10_path ='../dataset/cifar/'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # test_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/fold1/"
 # train_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/notfold1/"
-num_epochs = 300
+num_epochs = 150 #enough
 # test_dir = f"../dataset/val/imgs_split_by_folds/fold{foldnum}"
 # train_dir = f"../dataset/val/imgs_split_by_folds/notfold{foldnum}"
 
@@ -141,4 +141,4 @@ optimizer = optim.Adam(pretrained_net.parameters(), lr=lr)
 
 loss = torch.nn.CrossEntropyLoss()
 
-train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs)
+train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs,train_writer=train_writer,val_writer=val_writer)

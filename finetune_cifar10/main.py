@@ -35,7 +35,7 @@ def Model(nb_classes, pretrained=False):
     return model
 
 
-def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
+def train(net, train_iter, test_iter, criterion, optimizer, num_epochs,train_writer,val_writer):
     net = net.to(device)
     print("training on", device)
     best_accuracy = 0.0
@@ -82,14 +82,14 @@ def train(net, train_iter, test_iter, criterion, optimizer, num_epochs):
                  test_acc_sum / n2,
                  best_accuracy, time.time() - start))
 
-pretrained_path='../reference_code/BYOL-PyTorch-yaox12-cifar/ckpt/byol_cifar/resnet34_10.pth.tar'
+pretrained_path='../reference_code/BYOL-PyTorch-yaox12-cifar/ckpt/byol_cifar/resnet34_80.pth.tar'
 mode = 'train'
 foldnum = 1
 cifar10_path ='../dataset/cifar/'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # test_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/fold1/"
 # train_dir = "/shareData3/lab-xing.jing/project/nantes/imgs_split_by_labels_2/notfold1/"
-num_epochs = 300
+num_epochs = 150
 # test_dir = f"../dataset/val/imgs_split_by_folds/fold{foldnum}"
 # train_dir = f"../dataset/val/imgs_split_by_folds/notfold{foldnum}"
 
@@ -127,11 +127,11 @@ train_augs = transforms.Compose([
     transforms.RandomHorizontalFlip(),
     transforms.RandomVerticalFlip(),
     transforms.RandomRotation((180, 180)),
-    # transforms.Resize(256),
+    transforms.Resize(256),
     transforms.ToTensor()
 ])
 test_augs = transforms.Compose([
-    # transforms.Resize(256),
+    transforms.Resize(256),
     transforms.ToTensor()
 ])
 
@@ -159,4 +159,4 @@ optimizer = optim.Adam(pretrained_net.parameters(), lr=lr)
 
 loss = torch.nn.CrossEntropyLoss()
 
-train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs)
+train(pretrained_net, train_iter, test_iter, loss, optimizer, num_epochs=num_epochs,train_writer=train_writer,val_writer=val_writer)
