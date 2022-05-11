@@ -19,7 +19,7 @@ amp:
   opt_level: "O0"
 
 data:
-  image_dir: "../../dataset/cifar/extract_imgs_batch1_3"
+  image_dir: "../../dataset/cifar"
   resize_size: 256
   data_workers: 4
   train_batch_size: 128
@@ -32,7 +32,7 @@ optimizer:
   base_lr: 0.03
   momentum: 0.9
   weight_decay: 1.0e-6
-  total_epochs: 300
+  total_epochs: 200
   warmup_epochs: 10
   exclude_bias_and_bn: true
 
@@ -44,9 +44,9 @@ checkpoint:
   ckpt_path: "ckpt/byol_cifar/{}_{}.pth.tar"
 
 log:
-  log_step: 2
+  log_step: 50
   log_dir:
 
 stage: "train"
 distributed: False
-acc_n: 2
+acc_n: 1

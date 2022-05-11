@@ -2,7 +2,7 @@
 import os.path
 import time
 import datetime
-
+import pprint
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -30,6 +30,9 @@ class BYOLTrainer():
         self.world_size = self.config['world_size']
         self.rank = self.config['rank']
         self.gpu = self.config['local_rank']
+        if self.rank == 0:
+            self.writer = SummaryWriter(self.config['log']['log_dir'])
+        self.writer.add_text('config', pprint.pformat(self.config))
         self.distributed = self.config['distributed']
 
         """get the train parameters!"""
@@ -176,6 +179,10 @@ class BYOLTrainer():
 
         prefetcher = data_prefetcher(self.train_loader)
         images, _ = prefetcher.next()
+        if self.steps==0:
+            self.writer.add_images(f"step{self.steps}_input_batch_view1", images[:,0,:,:,:], global_step=0)
+            self.writer.add_images(f"step{self.steps}_input_batch_view2", images[:,1,:,:,:], global_step=0)
+
         i = 0
         while images is not None:
             i += 1
@@ -191,11 +198,11 @@ class BYOLTrainer():
 
             # forward
             tflag = time.time()
-            q, target_z = self.model(view1, view2, self.mm)
+            q1,q2,target_z1,target_z2 = self.model(view1, view2, self.mm)
             forward_time.update(time.time() - tflag)
 
             tflag = time.time()
-            loss = self.forward_loss(q, target_z)
+            loss = 0.5*(self.forward_loss(q1, target_z1)+self.forward_loss(q2, target_z2))/self.config['acc_n']
             if self.opt_level == 'O0':
                 loss.backward()
             else:
@@ -203,8 +210,8 @@ class BYOLTrainer():
                     scaled_loss.backward()
             
             if self.steps%self.config['acc_n']==0:
-                self.optimizer.zero_grad()
                 self.optimizer.step()
+                self.optimizer.zero_grad()
 
             backward_time.update(time.time() - tflag)
             loss_meter.update(loss.item(), view1.size(0))

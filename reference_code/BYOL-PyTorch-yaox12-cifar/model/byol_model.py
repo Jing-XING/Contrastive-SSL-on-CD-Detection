@@ -31,11 +31,12 @@ class BYOLModel(torch.nn.Module):
 
     def forward(self, view1, view2, mm):
         # online network forward
-        q = self.predictor(self.online_network(torch.cat([view1, view2], dim=0)))
-
-        # target network forward
+        q1 = self.predictor(self.online_network(view1))
+        q2 = self.predictor(self.online_network(view2))
+         # target network forward
         with torch.no_grad():
             self._update_target_network(mm)
-            target_z = self.target_network(torch.cat([view2, view1], dim=0)).detach().clone()
+            target_z1 = self.target_network(view2).detach().clone()
+            target_z2 = self.target_network(view1).detach().clone()
 
-        return q, target_z
+        return q1,q2, target_z1,target_z2

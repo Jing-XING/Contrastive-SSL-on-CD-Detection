@@ -4,7 +4,7 @@ from pathlib import Path
 import yaml
 import torch
 import torch.distributed as dist
-
+import pprint
 from trainer.byol_trainer import BYOLTrainer
 from utils import logging_util
 
@@ -20,7 +20,7 @@ def run_task(config):
         logging.info(f'world_size {world_size}, gpu {local_rank}, rank {rank} init done.')
     else:
         config.update({'world_size': 1, 'rank': 0, 'local_rank': 0})
-
+    pprint.pprint(config)
     trainer = BYOLTrainer(config)
     trainer.resume_model()
     start_epoch = trainer.start_epoch
@@ -36,5 +36,4 @@ def main():
 
 if __name__ == "__main__":
     print(f'Pytorch version: {torch.__version__}')
-    print(f'os environ: {os.environ}')
     main()
