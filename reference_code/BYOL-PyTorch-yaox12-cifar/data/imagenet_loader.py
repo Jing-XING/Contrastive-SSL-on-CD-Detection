@@ -41,12 +41,12 @@ class ImageNetLoader():
             transform = MultiViewDataInjector([transform1, transform2])
         else:
             transform = transform1
-        # dataset = datasets.ImageFolder(image_dir, transform=transform)
-        dataset = datasets.CIFAR10(
-            image_dir,
-            download=True,
-            transform=transform,
-        )
+        dataset = datasets.ImageFolder(image_dir, transform=transform)
+        # dataset = datasets.CIFAR10(
+        #     image_dir,
+        #     download=True,
+        #     transform=transform,
+        # )
         print('dataset num:',len(dataset))
         return dataset
 

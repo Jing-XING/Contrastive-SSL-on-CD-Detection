@@ -19,29 +19,31 @@ amp:
   opt_level: "O0"
 
 data:
-  image_dir: "../../dataset/cifar"
+  # image_dir: "../../dataset/cifar"
+  image_dir: "../../dataset/train"
   resize_size: 256
   data_workers: 4
-  train_batch_size: 128
+  train_batch_size: 96
   val_batch_size: 64
   dual_views: true
-  num_examples: 30000
+  # num_examples: 30000
+  num_examples: 35053
 
 optimizer:
   type: lars
-  base_lr: 0.03
+  base_lr: 0.3
   momentum: 0.9
   weight_decay: 1.0e-6
-  total_epochs: 200
-  warmup_epochs: 10
+  total_epochs: 100
+  warmup_epochs: 0
   exclude_bias_and_bn: true
 
 
 checkpoint:
   time_stamp: 0423
-  resume_path:
+  resume_path: 
   save_epoch: 20
-  ckpt_path: "ckpt/byol_cifar/{}_{}.pth.tar"
+  ckpt_path: "ckpt/byol_crohnipi/{}_{}.pth.tar"
 
 log:
   log_step: 50
@@ -49,4 +51,4 @@ log:
 
 stage: "train"
 distributed: False
-acc_n: 1
+acc_n: 3

@@ -122,6 +122,7 @@ class BYOLTrainer():
             self.logging.info("--> No loaded checkpoint!")
         else:
             model_path = model_path or self.resume_path
+            print(model_path)
             checkpoint = torch.load(model_path, map_location=self.device)
 
             self.start_epoch = checkpoint['epoch']
