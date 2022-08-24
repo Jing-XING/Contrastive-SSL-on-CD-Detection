@@ -1,0 +1,55 @@
+model:
+  base_momentum: 0.99
+  backbone:
+    type: "resnet18"
+    pretrained: True
+  projection:
+    type: "MLP"
+    input_dim: 512
+    hidden_dim: 4096
+    output_dim: 256
+  predictor:
+    type: "MLP"
+    input_dim: 256
+    hidden_dim: 4096
+    output_dim: 256
+
+amp:
+  sync_bn: True
+  opt_level: "O0"
+
+data:
+  # image_dir: "../../dataset/cifar
+  # image_dir: "../../dataset/train"
+  image_dir: "../../../../../data2/jing_data/dataset/train"
+  resize_size: 256
+  data_workers: 4
+  train_batch_size: 96
+  val_batch_size: 64
+  dual_views: true
+  # num_examples: 30000
+  num_examples: 35053
+
+optimizer:
+  type: lars
+  base_lr: 0.3
+  momentum: 0.9
+  weight_decay: 1.0e-6
+  total_epochs: 300
+  warmup_epochs: 10
+  exclude_bias_and_bn: true
+
+
+checkpoint:
+  time_stamp: 0423
+  resume_path: 
+  save_epoch: 50
+  ckpt_path: "ckpt/byol_crohnipi_acc1_bs96_epoch300_res18_pretrained_true_2views/{}_{}.pth.tar"
+
+log:
+  log_step: 50
+  log_dir:
+
+stage: "train"
+distributed: False
+acc_n: 1
