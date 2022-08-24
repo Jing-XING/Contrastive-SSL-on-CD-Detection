@@ -1,2 +1,1 @@
-# Self-supervised-learning-for-Crohn-Disease-Detection
-
+# CONTRASTIVE SELF SUPERVISED LEARNING ON CROHN'S DISEASE DETECTION

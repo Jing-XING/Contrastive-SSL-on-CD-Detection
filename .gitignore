@@ -2,10 +2,11 @@
 *.png
 *.jpg
 *.csv
-
+*.ipynb_checkpoints
 # check point
 *.pth
-
+__pycache__
+__init__.py
 # log
 /baseline/log/*
 /reference_code/BYOL-PyTorch-yaox12-/runs/*
