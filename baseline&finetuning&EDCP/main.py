@@ -17,7 +17,7 @@ parser.add_argument("--num_epochs", default=50, type=int, help="Number of epochs
 parser.add_argument("--dataset_dir", default="/shareData3/lab-xing.jing/dataset/CrohnIPI/imgs_split_by_folds/", type=str, help="Directory where dataset is stored.")
 parser.add_argument('--val_proportion',default=0.2,type=float,help='proportion of training set for validation')
 parser.add_argument("--num_workers", default=4, type=int, help="Number of data loading workers")
-parser.add_argument('--load_path', default="/shareData3/lab-xing.jing/project/nantes/ssl_crohn/baseline_on_crohnipi/pretrained_model/barlowtwins/resnet34.pth", type=str, help='path of pretrained backbone args.model')
+parser.add_argument('--load_path', default="", type=str, help='path of pretrained backbone args.model')
 parser.add_argument('--log_path', default='./log_finetune_barlowtwins', type=str, help='path of logments')
 parser.add_argument('--ckpt_path', default='./ckpt_finetune_barlowtwins', type=str, help='path of model saving')
 parser.add_argument("--image_size", default=256, type=int, help="Image size")
