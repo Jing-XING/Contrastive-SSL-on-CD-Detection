@@ -15,7 +15,7 @@ from utils import train_linear_eval,Model,set_writers_linear_eval_epoch,set_data
 from torch.utils.tensorboard import SummaryWriter
 now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
 parser = argparse.ArgumentParser()
-parser.add_argument('--models_tobe_evaluated',default='/shareData3/lab-xing.jing/project/nantes/ssl_crohn/saved_model/resnet18_epoch600_1viewPerTime_acc1_pretrained_true/',type=str,help='the folder of pretrained models to be evaluated')
+parser.add_argument('--models_tobe_evaluated',default='',type=str,help='the folder of pretrained models to be evaluated')
 parser.add_argument('--mode', default='finetune_unfixed', type=str, help='mode of the train(baseline_fixed/baseline_unfixed/finetune_fixed/finetune_unfixed')
 parser.add_argument('--cuda_num',default='11',type=str,help='number of used gpu')
 parser.add_argument('--pretrained_backbone',default=True,type=bool,help='whether use pretrained backbone')
@@ -26,7 +26,7 @@ parser.add_argument("--num_epochs", default=1, type=int, help="Number of epochs 
 parser.add_argument("--dataset_dir", default="/shareData3/lab-xing.jing/dataset/CrohnIPI/imgs_split_by_folds/", type=str, help="Directory where dataset is stored.")
 parser.add_argument('--val_proportion',default=0.2,type=float,help='proportion of training set for validation')
 parser.add_argument("--num_workers", default=4, type=int, help="Number of data loading workers")
-parser.add_argument('--load_path', default="/shareData3/lab-xing.jing/project/nantes/ssl_crohn/reference_code/moco/ckpt/bs96_epoch300/checkpoint_0300.pth.tar", type=str, help='path of pretrained backbone args.model')
+parser.add_argument('--load_path', default="", type=str, help='path of pretrained backbone args.model')
 parser.add_argument('--log_path', default='./log_evlauate_pretrained_epoch', type=str, help='path of logments')
 parser.add_argument('--ckpt_path', default='./ckpt_evaluate_pretrained_epoch', type=str, help='path of model saving')
 parser.add_argument("--image_size", default=256, type=int, help="Image size")
