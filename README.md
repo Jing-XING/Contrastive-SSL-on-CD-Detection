@@ -55,3 +55,9 @@ The pretraining codes for BYOL Barlow Twins and MoCo are in ./contrastive_self_s
 python main.py
 ```
 The default encoder is Resnet34 and the pretrained model will be saved in the corresponding ckpt folder.
+
+
+
+## PAPER
+[Contrastive Self-Supervised Learning on Crohn’s
+Disease Detection](https://github.com/Jing-XING/Contrastive-SSL-on-CD-Detection/blob/master/paper/Contrastive_self_supervised_learning_on_Crohn_s_disease_detection.pdf).
