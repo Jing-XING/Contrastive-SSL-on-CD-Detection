@@ -21,7 +21,6 @@ shown to reflect the model’s training progress. Furthermore, we
 discovered some intriguing issues with using contrastive selfsupervised learning for small dataset tasks in our experiments
 that merit further investigation.
 
-### The latex version of paper is in ./paper
 
 ## Usage
 ### Baseline and finetuning 
@@ -60,4 +59,4 @@ The default encoder is Resnet34 and the pretrained model will be saved in the co
 
 ## PAPER
 [Contrastive Self-Supervised Learning on Crohn’s
-Disease Detection](https://github.com/Jing-XING/Contrastive-SSL-on-CD-Detection/blob/master/paper/Contrastive_self_supervised_learning_on_Crohn_s_disease_detection.pdf).
+Disease Detection](https://ieeexplore.ieee.org/document/9995504).
