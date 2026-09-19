@@ -27,10 +27,10 @@ that merit further investigation.
 
 The code for baseline and finetuning are in ./baseline&finetuning&EDCP/main.py
 ```
-python main.py --mode='baseline_fixed' --SSl_method='BYOL' --resnet_version='resnet34' --ckpy_path=' '
+python main.py --mode=baseline_fixed --SSL_method=BYOL --resnet_version=resnet34 --dataset_dir=/path/to/folds --pretrained_backbone=False
 ```
 
-mode can be started with 'baseline' or 'finetuning', the following 'fixed' or 'unfixed' determines to fix the parameters of backbone(resnet) or not. 'ckpt_path' is the path of the pretrained models. SSL_mode('BYOL','MoCo' or 'BarlowTwins' is the contrastive self-supervised methods used for pretraining.
+Run these commands from `baseline&finetuning&EDCP`. Modes use `baseline` or `finetune` followed by `_fixed` or `_unfixed`. `--load_path` is the input pretrained checkpoint; `--ckpt_path` is the output checkpoint directory. `--SSL_method` selects `BYOL`, `MoCo` or `BarlowTwins`. Fine-tuning requires a compatible checkpoint through `--load_path`.
 
 
 ### Evaluation during contrastive pretraining
@@ -39,7 +39,7 @@ mode can be started with 'baseline' or 'finetuning', the following 'fixed' or 'u
 The evaluation tool can be run by:
 
 ```
-python evaluate_pretrain.py --models_tobe_evaluated=' '
+python evaluate_pretrain.py --models_tobe_evaluated=/path/to/checkpoints --dataset_dir=/path/to/folds
 ```
 
 to check the EDCP protocal's performance.
@@ -49,14 +49,24 @@ to check the EDCP protocal's performance.
 ![image](https://github.com/Jing-XING/Contrastive-SSL-on-CD-Detection/blob/master/paper/images/frameworks.png)
 
 
-The pretraining codes for BYOL Barlow Twins and MoCo are in ./contrastive_self_supervised_learning. Each pretraining can be run by
-```
-python main.py
-```
-The default encoder is Resnet34 and the pretrained model will be saved in the corresponding ckpt folder.
+Pretraining sources are under `contrastive_self_supervised_learning`. Their entry points differ: BYOL uses `byol_main.py` with `config/train_config.yaml`; Barlow Twins uses `main.py`; MoCo uses `main_moco.py`. Review each implementation's dataset paths, encoder, checkpoint settings and GPU/distributed setup before running. Defaults differ across these implementations.
 
 
 
 ## PAPER
 [Contrastive Self-Supervised Learning on Crohn’s
 Disease Detection](https://ieeexplore.ieee.org/document/9995504).
+
+
+## Organized local copy
+
+The baseline and EDCP command help can be read without installing PyTorch:
+
+```bash
+python "baseline&finetuning&EDCP/main.py" --help
+python "baseline&finetuning&EDCP/evaluate_pretrain.py" --help
+```
+
+Importing these two entry points no longer starts training. `--pretrained_backbone False` is parsed as false; the historical boolean default remains true. Dataset location defaults to `CROHN_DATA_ROOT` when set, otherwise `./data/CrohnIPI/imgs_split_by_folds`, and `--dataset_dir` overrides it. The expected layout is `fold1`…`fold5` and `notfold1`…`notfold5`, with ImageFolder class subdirectories.
+
+See [organization and runtime notes](ORGANIZATION.md) and [verification scope](CHECKS.md). The original research abstract above is retained; this organization pass does not independently reproduce its reported results.
